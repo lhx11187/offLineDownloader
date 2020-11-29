@@ -1,24 +1,25 @@
 package main
 
 import (
-	"github.com/valyala/fasthttp"
+	"bytes"
+	"flag"
+	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
-	"strings"
-	"bytes"
-	"io/ioutil"
-	"strconv"
-	"time"
-	"fmt"
 	"os/exec"
 	"runtime"
-	"flag"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/valyala/fasthttp"
 )
 
 //从url中获取文件名
 func getFileName(url string) string {
 	fileNames := strings.Split(url, "/")
-	fileName := fileNames[len(fileNames) - 1]
+	fileName := fileNames[len(fileNames)-1]
 	if fileName == "" {
 		fileName = "noname"
 	}
@@ -43,7 +44,7 @@ func download(url string) bool {
 //调用wget下载文件
 func downloadByWget(url string) bool {
 	fileName := getFileName(url)
-	cmd := exec.Command("wget", "-c", "-O", "./download/" + fileName, url)
+	cmd := exec.Command("wget", "-c", "-O", "./download/"+fileName, url)
 	err := cmd.Start()
 	if err != nil {
 		log.Fatal(err)
@@ -76,7 +77,7 @@ func main() {
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
     <meta name="msapplication-TileColor" content="#0e90d2">
-    <link rel="stylesheet" href="//cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+    <link rel="stylesheet" href="//www.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
 </head>
 <body>
 <header class="am-topbar am-topbar-inverse">
@@ -126,24 +127,6 @@ func main() {
         </div>
     </div>
     <hr>
-
-    <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="c7ef117e8fb5d1de76d99897dbbdad64" data-title="php离线下载" data-url="http://lyxz.gq/"></div>
-    <!-- 多说评论框 end -->
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-    <script type="text/javascript">
-        var duoshuoQuery = {short_name:"lyxzgq"};
-        (function() {
-            var ds = document.createElement('script');
-            ds.type = 'text/javascript';ds.async = true;
-            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-            ds.charset = 'UTF-8';
-            (document.getElementsByTagName('head')[0]
-            || document.getElementsByTagName('body')[0]).appendChild(ds);
-        })();
-    </script>
-    <!-- 多说公共JS代码 end -->
-
 </div>
 <footer ata-am-widget="footer" class="am-footer am-footer-default" style="
     background:#555;
@@ -155,12 +138,9 @@ func main() {
         }
     </style>
     <div class="am-footer-miscs">
-        <p>友情链接 &nbsp;<a href="http://www.lanyus.com/" rel="friend" target="_blank">无心问世</a></p> &nbsp;
         <p><a href="https://github.com/ilanyu/offLineDownloader" target="_blank">关于</a></p>
-        <p class="am-article-meta">
-        </p><p><a href="#" target="_blank"><span class="am-icon-qq am-success" target="_blank"></span> 程序开发 无心问世</a></p>
         <br>
-        <p>© 2016 无心问世. copyright</p>
+        <p>© 2020 黑鸭子改版. copyright</p>
     </div>
 </footer>
 
@@ -185,7 +165,7 @@ func main() {
 
 <!--[if (gte IE 9)|!(IE)]><!-->
 <script src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
-<script src="//cdn.amazeui.org/amazeui/2.4.2/js/amazeui.min.js"></script>
+<script src="//www.amazeui.org/amazeui/2.4.2/js/amazeui.min.js"></script>
 <!--<![endif]-->
 <script>
     function writeDownList() {
@@ -250,8 +230,8 @@ func main() {
 			length := len(dirList)
 			ctx.WriteString("[")
 			for i := 0; i < length; i++ {
-				ctx.WriteString(`{"name":"` + dirList[i].Name() + `","mtime":"` + dirList[i].ModTime().Format("2006-01-02 15:04:05") + `","size":"` + strconv.FormatInt(dirList[i].Size() / 1024 / 1024, 10) + ` MB"}`)
-				if i != length - 1 {
+				ctx.WriteString(`{"name":"` + dirList[i].Name() + `","mtime":"` + dirList[i].ModTime().Format("2006-01-02 15:04:05") + `","size":"` + strconv.FormatInt(dirList[i].Size()/1024/1024, 10) + ` MB"}`)
+				if i != length-1 {
 					ctx.WriteString(",")
 				}
 			}
