@@ -101,7 +101,7 @@ func main() {
             <legend>离线下载</legend>
             <div class="am-form-group">
                 <p>欢迎使用！采用golang后台下载的方法实现简单的离线下载功能</p>
-                <p>文件永久保留，下载空间为512M，若空间不足，请手工删除，且用且珍惜！</p>
+                <p>文件永久保留，下载空间为10G，若空间不足，请手工删除，且用且珍惜！</p>
                 <div class="am-input-group">
 						<span class="am-input-group-label">
 							<i class="am-icon-cloud-download"></i>
@@ -138,7 +138,7 @@ func main() {
         }
     </style>
     <div class="am-footer-miscs">
-        <p><a href="https://github.com/ilanyu/offLineDownloader" target="_blank">关于</a></p>
+        <p><a href="https://github.com/lhx11187/offLineDownloader" target="_blank">关于</a></p>
         <br>
         <p>© 2020 黑鸭子改版. copyright</p>
     </div>
